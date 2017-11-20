@@ -1,12 +1,11 @@
 images = ['./guy_fieri.jpg', './cool_dude.jpg'];
-image_count = 0;
 
 function inView(img_container) {
   const rect = img_container.getBoundingClientRect();
   return (
     rect.top >= 0 &&
     rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 };
@@ -25,5 +24,8 @@ function checkImages() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  interval = setInterval(() => checkImages, 500);
+  interval = setInterval(checkImages, 500);
+  document.addEventListener('DOMNodeInserted', () =>{
+    if (images.length === 0) { clearInterval(interval); }
+  });
 })
